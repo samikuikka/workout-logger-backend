@@ -9,7 +9,19 @@ exercisesRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
     const exercises = await Exercise.find({user: user._id})
     response.status(200).json(exercises);
-})
+});
+
+exercisesRouter.get('/weightlift', userExtractor, async (request, response) => {
+    const user = request.user;
+    const exercises = await Weightlift.find({user: user._id});
+    response.status(200).json(exercises);
+});
+
+exercisesRouter.get('/run', userExtractor, async (request, response) => {
+    const user = request.user;
+    const exercises = await Run.find({user: user._id});
+    response.status(200).json(exercises);
+});
 
 // Send weightlift
 exercisesRouter.post('/weightlift', userExtractor, async (request, response) => {

@@ -137,7 +137,49 @@ describe('exercise', () => {
                 .expect('Content-Type', /application\/json/);
 
             expect(response.body).toHaveLength(2);   
-        })
+        });
+
+        test('"/weightlift" shows user owns type weightlift exercises', async () => {
+            const users = await User.find({name: 'test'});
+            const userID = users[0]._id;
+
+            const ex1 = new Weightlift({name: 'Weightlift', user: userID, weight: 50, reps: 10});
+            const ex2 = new Weightlift({name: 'Weightlift', user: userID, weight: 100, reps: 5});
+
+            await ex1.save();
+            await ex2.save();
+
+            const exercises = await Weightlift.find({});
+            expect(exercises).toHaveLength(2);
+
+            const response = await api
+                .get('/api/exercises/weightlift')
+                .set('Authorization', `bearer ${token}`)
+                .expect(200)
+                .expect('Content-Type', /application\/json/);
+            
+            expect(response.body.map(x => x.weight)).toEqual(expect.arrayContaining([50, 100]));
+        });
+
+        test('individual exercise route (e.g. "/run") show only the own type resources to the user', async () => {
+            const user = await User.find({name: 'test'});
+            const userID = user[0]._id;
+            
+            const ex1 = new Weightlift({name: 'Weightlift', user: userID, weight: 50, reps: 10});
+            const ex2 = new Run({name: 'Run', user: userID, distance: 10, duration: 30});
+            await ex1.save();
+            await ex2.save();
+
+            const exercises = await Exercise.find({});
+            expect(exercises).toHaveLength(2);
+
+            const response = await api
+                .get('/api/exercises/run')
+                .set('Authorization', `bearer ${token}`)
+                .expect(200);
+              
+            expect(response.body).toHaveLength(1);
+        });
 
     })
 });
