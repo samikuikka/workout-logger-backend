@@ -2,7 +2,7 @@ POST http://localhost:4005/api/users
 Content-Type: application/json
 
 {
-    "username": "test5",
-    "password": "123456",
-    "email": "sdf3sd@email.com"
+    "username": "tester",
+    "password": "ajs8dndy7s76n",
+    "email": "testdasdsa@testasdsadsa.com"
 }

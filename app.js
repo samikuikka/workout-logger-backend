@@ -9,6 +9,7 @@ const logger = require('./utils/logger');
 const userRouter = require('./routes/user');
 const loginRouter = require('./routes/login');
 const exercisesRouter = require('./routes/exercises');
+const exercisesNameRouter = require('./routes/exercise_name');
 
 
 //Express app
@@ -33,6 +34,7 @@ app.use(middleware.tokenExtractor);
 app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter)
 app.use('/api/exercises', exercisesRouter);
+app.use('/api/exercise_names', exercisesNameRouter);
 
 // route "/"
 app.get('/', async (request, response) => {
