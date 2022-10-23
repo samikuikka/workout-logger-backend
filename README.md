@@ -90,5 +90,65 @@ Content-Type: application/json
 }
 ```
 
+### GET /api/exercise_names
+
+Get all the exercise types in the db and exercise ids
+
+**Response ```200```**
+
+```json
+[
+  {
+    "exercise": "Plank",
+    "id": 0
+  },
+  {
+    "exercise": "Squat",
+    "id": 1
+  },
+  {
+    "exercise": "Bench press",
+    "id": 2
+  },
+  {
+    "exercise": "Deadlift",
+    "id": 3
+  },
+  {
+    "exercise": "T-bar row",
+    "id": 4
+  },
+  {
+    "exercise": "Pullup",
+    "id": 5
+  },
+  {
+    "exercise": "Seated incline dumbbell curl",
+    "id": 6
+  },
+  {
+    "exercise": "Standing barbell curl",
+    "id": 7
+  },
+  {
+    "exercise": "Dips",
+    "id": 8
+  },
+  {
+    "exercise": "Dumbbell lateral raises",
+    "id": 9
+  },
+  {
+    "exercise": "Presses",
+    "id": 10
+  },
+  {
+    "exercise": "Leg curl",
+    "id": 11
+  }
+]
+```
+
+
 
 
