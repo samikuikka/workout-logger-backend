@@ -1,5 +1,4 @@
 const exercisesNameRouter = require('express').Router();
-const { max } = require('date-fns');
 const ExerciseName = require('../models/ExerciseName');
 
 // Get the name and id of the exercises
