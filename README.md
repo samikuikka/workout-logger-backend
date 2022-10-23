@@ -38,7 +38,7 @@ npm run test
 
 ### POST /api/users
 
-Get users of the database
+Register for the application
 
 **Headers**
 ```javascript
@@ -62,7 +62,33 @@ Get users of the database
   "email": "testdasdsa@testasdsadsa.com",
   "id": "63555fee0c2d46679fde5cf0"
 }
-
 ```
+### POST /api/login
+
+Login to the application
+
+***Headers***
+```javascript
+Content-Type: application/json
+```
+
+**Data paramater **
+```json
+{
+    "username": "tester",
+    "password": "ajs8dndy7s76n"
+}
+```
+
+**Response ```200```**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto",
+  "username": "tester",
+  "id": "63555fee0c2d46679fde5cf0"
+}
+```
+
 
 
