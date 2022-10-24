@@ -1,8 +1,7 @@
 const exercisesRouter = require('express').Router();
 const Exercise = require('../models/Exercise');
-const Run = require('../models/Exercises/Run');
-const Weightlift = require('../models/Exercises/Weightlift');
 const { userExtractor } = require('../utils/middleware');
+const { choose } = require('../services/exerciseService')
 
 // Get all the exercises of an user
 exercisesRouter.get('/', userExtractor, async (request, response) => {
@@ -11,47 +10,10 @@ exercisesRouter.get('/', userExtractor, async (request, response) => {
     response.status(200).json(exercises);
 });
 
-exercisesRouter.get('/weightlift', userExtractor, async (request, response) => {
-    const user = request.user;
-    const exercises = await Weightlift.find({user: user._id});
-    response.status(200).json(exercises);
-});
-
-exercisesRouter.get('/run', userExtractor, async (request, response) => {
-    const user = request.user;
-    const exercises = await Run.find({user: user._id});
-    response.status(200).json(exercises);
-});
-
-// Send weightlift
-exercisesRouter.post('/weightlift', userExtractor, async (request, response) => {
-    const user = request.user;
+exercisesRouter.post('/0/', userExtractor, async (request, response) => {
     const body = request.body;
-
-    const exercise = new Weightlift({
-        name: 'Weightlift',
-        user: user._id,
-        weight: body.weight,
-        reps: body.reps
-    });
     
-    const savedExercise = await exercise.save();
-    response.status(201).json(savedExercise);
-});
-
-exercisesRouter.post('/run', userExtractor, async (request, response) => {
-    const user = request.user;
-    const body = request.body;
-
-    const exercise = new Run({
-        name: 'Run',
-        user: user._id,
-        duration: body.duration,
-        distance: body.distance
-    });
-
-    const savedRun = await exercise.save();
-    response.status(201).json(savedRun);
+    const exercise = choose(id, body);
 });
 
 module.exports = exercisesRouter;
