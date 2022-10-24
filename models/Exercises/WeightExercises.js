@@ -1,9 +1,10 @@
 const  mongoose  = require('mongoose');
 const Exercise = require('../Exercise');
 
-// Inherited exercise with extra weight, sets, reps parameters
-const WeightExercise = Exercise.discriminator(
-    'WeightExercise',
+
+// id 2
+const BenchPress = Exercise.discriminator(
+    'BenchPress',
     new mongoose.Schema({
         weight: Number,
         sets: Number,
@@ -11,44 +12,74 @@ const WeightExercise = Exercise.discriminator(
     })
 );
 
-// id 2
-const BenchPress = WeightExercise.discriminator(
-    'BenchPress',
-);
-
 // id 3
-const Deadlift = WeightExercise.discriminator(
+const Deadlift = Exercise.discriminator(
     'Deadlift',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 4
-const TBarRow = WeightExercise.discriminator(
+const TBarRow = Exercise.discriminator(
     'T-barRow',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 6
-const SIDumbellCurl = WeightExercise.discriminator(
+const SIDumbellCurl = Exercise.discriminator(
     'SeatedInclineDumbbellCurl',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 7
-const StandingBurbellCurl = WeightExercise.discriminator(
+const StandingBurbellCurl = Exercise.discriminator(
     'StandingBarbellCurl',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 9
-const DumbbellLateralRaise = WeightExercise.discriminator(
-    'DumbbellLateralRaise'
+const DumbbellLateralRaise = Exercise.discriminator(
+    'DumbbellLateralRaise',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 10
-const Presses = WeightExercise.discriminator(
-    'Presses'
+const Presses = Exercise.discriminator(
+    'Presses',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 // id 11
-const LegCurl =  WeightExercise.discriminator(
-    'LegCurl'
+const LegCurl =  Exercise.discriminator(
+    'LegCurl',
+    new mongoose.Schema({
+        weight: Number,
+        sets: Number,
+        reps: Number
+    })
 );
 
 module.exports = {
