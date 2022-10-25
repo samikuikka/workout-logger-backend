@@ -186,4 +186,40 @@ Get all the exercises of the user
 ]
 ```
 
+### POST /api/exercises/:exercise_id
 
+Post a new exercise type :exercise_id to the database
+
+|          Name | Required |  Type   | Description                                                                                                                                                           |
+| -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto"                                                                    |
+|  `Content-Type`| required | application/json | Data must be sent in json format |
+
+**Data paramaters**
+
+Needed parameters for given exercise, e.g. for deadlift (id = 2):
+
+```json
+{
+    "weight": 50,
+    "sets": 5,
+    "reps": 7
+}
+```
+
+** Response `201`** 
+
+```json 
+{
+  "weight": 50,
+  "sets": 5,
+  "reps": 7,
+  "_id": "6357f0db1e00c0c306cbda89",
+  "id": 2,
+  "name": "Bench press",
+  "user": "63555fee0c2d46679fde5cf0",
+  "__t": "BenchPress",
+  "date": "2022-10-25T14:21:15.625Z",
+  "__v": 0
+}
+```
