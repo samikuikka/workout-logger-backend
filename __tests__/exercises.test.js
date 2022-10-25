@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
-const Weightlift = require('../models/Exercises/Weightlift');
-const Run = require('../models/Exercises/Run');
+const { BenchPress } = require('../models/Exercises/WeightExercises');
+
 
 // reset database for tests
 beforeEach( async () => {
@@ -35,74 +35,104 @@ describe('exercise', () => {
             await Exercise.deleteMany({});
         })
 
-        test('can post exercise type weightlifting', async () => {
+        test('post increases count', async () => {
 
-            // At start there are no exercises in the db
-            let exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(0);
+            const obj = {
+                duration: 50
+            }
+
+            const response = await api
+                .post('/api/exercises/0/')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+                .expect(201)
+                .expect('Content-Type', /application\/json/);
             
-            const exercise = {
-                weight: 50,
+            expect(response.body.name).toEqual('Plank');
+            let exercises = await Exercise.find({});
+            expect(exercises).toHaveLength(1);
+        });
+
+        test('can post different type of exercises', async () => {
+            const obj = {
+                duration: 50,
+            }
+
+            const obj2 = {
                 reps: 10
             }
-            
-            const response = await api
-                .post('/api/exercises/weightlift')
-                .send(exercise)
-                .set('Authorization', `bearer ${token}`)
-                .expect(201)
-                .expect('Content-Type', /application\/json/);
 
-            // Check that POST send back the exercise that was added
-            expect(response.body.name).toEqual('Weightlift');
+            await api
+                .post('/api/exercises/0/')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+                .expect(201);
+
+            await api
+                .post('/api/exercises/1/')
+                .send(obj2)
+                .set('Authorization', `bearer ${token}`)
+                .expect(201);
             
-            // After POST exercises have 1 exercise in db
-            exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(1); 
+            let exercises = await Exercise.find({});
+            expect(exercises).toHaveLength(2);
         });
 
-        test('can post run (or other)', async () => {
-            let exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(0);
-            const exercise = {
-                duration: 60,
-                distance: 12
+        test('works with more then one extra parameters', async () => {
+            const obj = {
+                weight: 50,
+                sets: 5,
+                reps: 10
             }
 
-            const response = await api
-                .post('/api/exercises/run')
-                .send(exercise)
+            await api
+                .post('/api/exercises/2/')
+                .send(obj)
                 .set('Authorization', `bearer ${token}`)
-                .expect(201)
-                .expect('Content-Type', /application\/json/);
+                .expect(201);
+
+            const exercises = await Exercise.find({})
             
-            expect(response.body.name).toEqual('Run');
-                
-            // After POST exercises have 1 exercise in db
-            exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(1); 
+            expect(exercises).toHaveLength(1);
         });
 
-        test('can send many types and all of them saves to db', async () => {
-            let exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(0);
+        test('filter by type works', async () => {
+            const obj = {
+                weight: 50,
+                sets: 5,
+                reps: 10
+            }
 
+            const obj2 = {
+                duration: 50,
+            }
 
             await api
-                .post('/api/exercises/weightlift')
-                .send({weight: 10, reps: 100})
+                .post('/api/exercises/2/')
+                .send(obj)
                 .set('Authorization', `bearer ${token}`)
                 .expect(201);
             
             await api
-                .post('/api/exercises/run')
-                .send({distance: 5, duration: 30})
+                .post('/api/exercises/2/')
+                .send(obj)
                 .set('Authorization', `bearer ${token}`)
                 .expect(201);
 
-            exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(2);
+            await api
+                .post('/api/exercises/0/')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+                .expect(201);
+            
+            const exercises = await Exercise.find({});
+            expect(exercises).toHaveLength(3);
+
+            const presses = await BenchPress.find({});
+            expect(presses).toHaveLength(2);
+
         })
+
     });
 
     describe('GET', () => {
@@ -117,69 +147,28 @@ describe('exercise', () => {
             expect(response.body).toEqual([]);
         });
 
-        test('shows user exercises when user has any', async () => {
-            
-            const user = await User.find({name: 'test'});
-            const userID = user[0]._id;
-            
-            const ex1 = new Weightlift({name: 'Weightlift', user: userID, weight: 50, reps: 10});
-            const ex2 = new Run({name: 'Run', user: userID, distance: 10, duration: 30});
-            await ex1.save();
-            await ex2.save();
-
-            const exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(2);
-
-            const response = await api
-                .get('/api/exercises')
+        test('show exercises when there are multiple of them', async () => {
+            const obj = {
+                weight: 10
+            }
+            await api.post('/api/exercises/2')
+                .send(obj)
                 .set('Authorization', `bearer ${token}`)
-                .expect(200)
-                .expect('Content-Type', /application\/json/);
 
-            expect(response.body).toHaveLength(2);   
-        });
-
-        test('"/weightlift" shows user owns type weightlift exercises', async () => {
-            const users = await User.find({name: 'test'});
-            const userID = users[0]._id;
-
-            const ex1 = new Weightlift({name: 'Weightlift', user: userID, weight: 50, reps: 10});
-            const ex2 = new Weightlift({name: 'Weightlift', user: userID, weight: 100, reps: 5});
-
-            await ex1.save();
-            await ex2.save();
-
-            const exercises = await Weightlift.find({});
-            expect(exercises).toHaveLength(2);
-
-            const response = await api
-                .get('/api/exercises/weightlift')
+            await api.post('/api/exercises/3')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+            
+            const response = await api.get('/api/exercises')
                 .set('Authorization', `bearer ${token}`)
                 .expect(200)
                 .expect('Content-Type', /application\/json/);
             
-            expect(response.body.map(x => x.weight)).toEqual(expect.arrayContaining([50, 100]));
+            expect(response.body).toHaveLength(2);
+
+
         });
 
-        test('individual exercise route (e.g. "/run") show only the own type resources to the user', async () => {
-            const user = await User.find({name: 'test'});
-            const userID = user[0]._id;
-            
-            const ex1 = new Weightlift({name: 'Weightlift', user: userID, weight: 50, reps: 10});
-            const ex2 = new Run({name: 'Run', user: userID, distance: 10, duration: 30});
-            await ex1.save();
-            await ex2.save();
-
-            const exercises = await Exercise.find({});
-            expect(exercises).toHaveLength(2);
-
-            const response = await api
-                .get('/api/exercises/run')
-                .set('Authorization', `bearer ${token}`)
-                .expect(200);
-              
-            expect(response.body).toHaveLength(1);
-        });
 
     })
 });
