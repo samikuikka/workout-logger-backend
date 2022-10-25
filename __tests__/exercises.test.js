@@ -147,6 +147,28 @@ describe('exercise', () => {
             expect(response.body).toEqual([]);
         });
 
+        test('show exercises when there are multiple of them', async () => {
+            const obj = {
+                weight: 10
+            }
+            await api.post('/api/exercises/2')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+
+            await api.post('/api/exercises/3')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+            
+            const response = await api.get('/api/exercises')
+                .set('Authorization', `bearer ${token}`)
+                .expect(200)
+                .expect('Content-Type', /application\/json/);
+            
+            expect(response.body).toHaveLength(2);
+
+
+        });
+
 
     })
 });
