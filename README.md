@@ -149,6 +149,41 @@ Get all the exercise types in the db and exercise ids
 ]
 ```
 
+### GET /api/exercises
 
+Get all the exercises of the user
+
+**Headers**
+
+|          Name | Required |  Type   | Description                                                                                                                                                           |
+| -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto"                                                                    |
+
+**Response `201`**
+
+```json
+[
+  {
+    "_id": "6357eeee920806962f8e5d3a",
+    "weight": 50,
+    "id": 2,
+    "name": "Bench press",
+    "user": "63555fee0c2d46679fde5cf0",
+    "__t": "BenchPress",
+    "date": "2022-10-25T14:13:02.314Z",
+    "__v": 0
+  },
+  {
+    "_id": "6357eef2920806962f8e5d3d",
+    "weight": 50,
+    "id": 2,
+    "name": "Bench press",
+    "user": "63555fee0c2d46679fde5cf0",
+    "__t": "BenchPress",
+    "date": "2022-10-25T14:13:06.351Z",
+    "__v": 0
+  }
+]
+```
 
 
