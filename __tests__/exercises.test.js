@@ -165,8 +165,29 @@ describe('exercise', () => {
                 .expect('Content-Type', /application\/json/);
             
             expect(response.body).toHaveLength(2);
+        });
 
+        test('can GET specific type of exercises', async () => {
+            const obj = {
+                weight: 10
+            }
+            await api.post('/api/exercises/2')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
 
+            await api.post('/api/exercises/3')
+                .send(obj)
+                .set('Authorization', `bearer ${token}`)
+
+            const response = await api.get('/api/exercises/2')
+                .set('Authorization', `bearer ${token}`)
+                .expect(200)
+                .expect('Content-Type', /application\/json/);
+            
+            expect(response.body).toHaveLength(1);
+            const all = await Exercise.find({})
+            expect(all).toHaveLength(2);
+            
         });
 
 
