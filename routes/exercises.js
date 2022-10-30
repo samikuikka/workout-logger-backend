@@ -26,9 +26,12 @@ exercisesRouter.get('/', userExtractor, async (request, response) => {
 exercisesRouter.get('/:id', userExtractor, async (request, response) => {
     const user = request.user;
     const id = sanitize(request.params.id);
+    const filters = request.query;
 
     const exercises = await Exercise.find({user: user._id, id: id});
-    response.status(200).json(exercises);
+    const filtered = filter(exercises, filters)
+    
+    response.status(200).json(filtered);
 });
 
 // Plank
