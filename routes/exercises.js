@@ -6,12 +6,20 @@ const { BenchPress, Deadlift, TBarRow, SIDumbellCurl, StandingBurbellCurl,
         DumbbellLateralRaise, Presses, LegCurl        
 } = require('../models/Exercises/WeightExercises');
 var sanitize = require('mongo-sanitize');
+const { filter } = require('../services/filterService');
 
 // Get all the exercises of an user
 exercisesRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
+
+    //filters
+    const filters = request.query;
+
     const exercises = await Exercise.find({user: user._id})
-    response.status(200).json(exercises);
+    
+    const filtered = filter(exercises, filters)
+    
+    response.status(200).json(filtered);
 });
 
 //GET certain type of exercises of the user
