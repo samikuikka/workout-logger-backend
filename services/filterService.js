@@ -1,5 +1,7 @@
-const Exercise = require('../models/Exercise')
-var isThisWeek = require('date-fns/isThisWeek')
+const Exercise = require('../models/Exercise');
+var isThisWeek = require('date-fns/isThisWeek');
+var isThisMonth = require('date-fns/isThisMonth')
+var isThisYear = require('date-fns/isThisYear')
 
 /*Filter the exercises with the given request queries.
 *   Currently accepted filter parameters:
@@ -12,7 +14,7 @@ const filter = (exercises, filters) => {
         let isValid = true;
 
         for(key in filters) {
-            console.log(key, filters[key]);
+            //console.log(key, filters[key]);
             switch (key) {
                 case 'date_range':
                     isValid = isValid && dateFilter(exercise, filters[key])
@@ -31,8 +33,14 @@ const dateFilter = (exercise, time) => {
     let flag = true;
     switch (time) {
         case 'week':
-            console.log(exercise.date, isThisWeek(exercise.date) )
-            flag = isThisWeek(exercise.date) 
+            flag = isThisWeek(exercise.date);
+            break;
+        case 'month':
+            flag = isThisMonth(exercise.date);
+            break;
+        case 'year':
+            flag = isThisYear(exercise.date);
+            break;
         default:
             flag = flag
     }
