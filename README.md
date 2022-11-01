@@ -98,54 +98,18 @@ Get all the exercise types in the db and exercise ids
 
 ```json
 [
-  {
-    "exercise": "Plank",
-    "id": 0
-  },
-  {
-    "exercise": "Squat",
-    "id": 1
-  },
-  {
-    "exercise": "Bench press",
-    "id": 2
-  },
-  {
-    "exercise": "Deadlift",
-    "id": 3
-  },
-  {
-    "exercise": "T-bar row",
-    "id": 4
-  },
-  {
-    "exercise": "Pullup",
-    "id": 5
-  },
-  {
-    "exercise": "Seated incline dumbbell curl",
-    "id": 6
-  },
-  {
-    "exercise": "Standing barbell curl",
-    "id": 7
-  },
-  {
-    "exercise": "Dips",
-    "id": 8
-  },
-  {
-    "exercise": "Dumbbell lateral raises",
-    "id": 9
-  },
-  {
-    "exercise": "Presses",
-    "id": 10
-  },
-  {
-    "exercise": "Leg curl",
-    "id": 11
-  }
+  { "exercise": "Plank", "id": 0 },
+  { "exercise": "Squat","id": 1 },
+  { "exercise": "Bench press", "id": 2 },
+  { "exercise": "Deadlift", "id": 3 },
+  {  "exercise": "T-bar row", "id": 4 },
+  { "exercise": "Pullup", "id": 5 },
+  { "exercise": "Seated incline dumbbell curl", "id": 6 },
+  { "exercise": "Standing barbell curl", "id": 7 },
+  { "exercise": "Dips", "id": 8 },
+  { "exercise": "Dumbbell lateral raises", "id": 9 },
+  { "exercise": "Presses", "id": 10 },
+  { "exercise": "Leg curl", "id": 11 }
 ]
 ```
 
@@ -170,26 +134,8 @@ Get all the exercises of the user
 
 ```json
 [
-  {
-    "_id": "6357eeee920806962f8e5d3a",
-    "weight": 50,
-    "id": 2,
-    "name": "Bench press",
-    "user": "63555fee0c2d46679fde5cf0",
-    "__t": "BenchPress",
-    "date": "2022-10-25T14:13:02.314Z",
-    "__v": 0
-  },
-  {
-    "_id": "6357eef2920806962f8e5d3d",
-    "weight": 50,
-    "id": 2,
-    "name": "Bench press",
-    "user": "63555fee0c2d46679fde5cf0",
-    "__t": "BenchPress",
-    "date": "2022-10-25T14:13:06.351Z",
-    "__v": 0
-  }
+  { "_id": "6357eeee920806962f8e5d3a", "weight": 50,  "id": 2, "name": "Bench press",  "user": "63555fee0c2d46679fde5cf0", "__t": "BenchPress", "date": "2022-10-25T14:13:02.314Z", "__v": 0 },
+  { "_id": "6357eef2920806962f8e5d3d", "weight": 50, "id": 2, "name": "Bench press", "user": "63555fee0c2d46679fde5cf0",  "__t": "BenchPress", "date": "2022-10-25T14:13:06.351Z", "__v": 0 }
 ]
 ```
 
