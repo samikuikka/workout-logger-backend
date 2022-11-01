@@ -262,11 +262,18 @@ Post array of exercises
 Data needs to be send as Array in json format where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
 
 ```json
-{
-    "weight": 50,
-    "sets": 5,
-    "reps": 7
-}
+[
+    {
+        "id": 3,
+        "weight": 50,
+        "sets": 5,
+        "reps": 7
+    },
+    {
+        "id": 0
+    }
+]
+
 ```
 
 ** Response `201`** 
