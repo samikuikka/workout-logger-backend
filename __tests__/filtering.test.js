@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
-var addWeeks = require('date-fns/addWeeks')
+const ExerciseName = require('../models/ExerciseName');
+
 var add = require('date-fns/add')
 var sub = require('date-fns/sub')
 
@@ -15,6 +16,14 @@ var sub = require('date-fns/sub')
 beforeEach( async () => {
     await User.deleteMany({});
     await Exercise.deleteMany({});
+    await ExerciseName.deleteMany({});
+    //Add 4 exercise name for tests
+    await ExerciseName.create(
+        {_id: 0, exercise: "Plank"},
+        {_id: 1, exercise: "Squat"},
+        {_id: 2, exercise: "Benmch press"},
+        {_id: 3, exercise: "Deadlift"}
+    );
 });
 
 describe('filtering', () => {
@@ -39,29 +48,24 @@ describe('filtering', () => {
         beforeEach( async () => {
             await Exercise.deleteMany({})
             const obj1 = {
+                id: 0,
                 duration: 50,
                 date: new Date(today.getFullYear(), today.getMonth(), today.getDate()-7)
             }
             const obj2 = {
+                id: 0,
                 duration: 40,
                 date: today
             }
             const obj3 = {
+                id: 0,
                 duration: 30,
                 date: new Date(today.getFullYear(), today.getMonth(), today.getDate()+7)
             }
             await api
-                .post('/api/exercises/0/')
-                .send(obj1)
+                .post('/api/exercises')
+                .send([obj1, obj2, obj3])
                 .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj2)
-                .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj3)
-                .set('Authorization', `bearer ${token}`)
         });
 
         test('can find the exercises', async () => {
@@ -88,29 +92,24 @@ describe('filtering', () => {
         beforeEach( async () => {
             await Exercise.deleteMany({})
             const obj1 = {
+                id: 0,
                 duration: 50,
                 date: sub(today, { months: 1})
             }
             const obj2 = {
+                id: 0,
                 duration: 40,
                 date: today
             }
             const obj3 = {
+                id: 0,
                 duration: 30,
                 date: add(today, { months: 1})
             }
             await api
-                .post('/api/exercises/0/')
-                .send(obj1)
+                .post('/api/exercises')
+                .send([obj1, obj2, obj3])
                 .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj2)
-                .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj3)
-                .set('Authorization', `bearer ${token}`)
         });
 
         test('can find the exercises', async () => {
@@ -136,29 +135,24 @@ describe('filtering', () => {
         beforeEach( async () => {
             await Exercise.deleteMany({})
             const obj1 = {
+                id: 0,
                 duration: 50,
                 date: sub(today, { years: 1})
             }
             const obj2 = {
+                id: 0,
                 duration: 40,
                 date: today
             }
             const obj3 = {
+                id: 0,
                 duration: 30,
                 date: add(today, { years: 1})
             }
             await api
-                .post('/api/exercises/0/')
-                .send(obj1)
+                .post('/api/exercises')
+                .send([obj1, obj2, obj3])
                 .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj2)
-                .set('Authorization', `bearer ${token}`);
-            await api
-                .post('/api/exercises/0/')
-                .send(obj3)
-                .set('Authorization', `bearer ${token}`)
         });
 
         test('can find the exercises', async () => {

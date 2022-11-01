@@ -248,9 +248,9 @@ Get specific type of exercises
 ```
 
 
-### POST /api/exercises/:exercise_id
+### POST /api/exercises
 
-Post a new exercise type :exercise_id to the database
+Post array of exercises
 
 |          Name | Required |  Type   | Description                                                                                                                                                           |
 | -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -259,7 +259,7 @@ Post a new exercise type :exercise_id to the database
 
 **Data paramaters**
 
-Needed parameters for given exercise, e.g. for deadlift (id = 2):
+Data needs to be send as Array in json format where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
 
 ```json
 {
@@ -272,18 +272,11 @@ Needed parameters for given exercise, e.g. for deadlift (id = 2):
 ** Response `201`** 
 
 ```json 
-{
-  "weight": 50,
-  "sets": 5,
-  "reps": 7,
-  "_id": "6357f0db1e00c0c306cbda89",
-  "id": 2,
-  "name": "Bench press",
-  "user": "63555fee0c2d46679fde5cf0",
-  "__t": "BenchPress",
-  "date": "2022-10-25T14:21:15.625Z",
-  "__v": 0
-}
+
+[  
+	{  "id": 3,  "name": "Deadlift",  "user": "63555fee0c2d46679fde5cf0",  "weight": 50,  "sets": 5,  "reps": 7,  "_id": "63612ca0aa4e031e9ec3a15d",  "date": "2022-11-01T14:26:40.412Z",  "__v": 0  },  
+	{  "id": 0,  "name": "Plank",  "user": "63555fee0c2d46679fde5cf0",  "_id": "63612ca0aa4e031e9ec3a160",  "date": "2022-11-01T14:26:40.467Z",  "__v": 0  }  
+]
 ```
 
 
