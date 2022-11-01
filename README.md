@@ -212,38 +212,9 @@ Get specific type of exercises
 
 ```json
 [
-  {
-    "_id": "6357eeee920806962f8e5d3a",
-    "weight": 50,
-    "id": 2,
-    "name": "Bench press",
-    "user": "63555fee0c2d46679fde5cf0",
-    "__t": "BenchPress",
-    "date": "2022-10-25T14:13:02.314Z",
-    "__v": 0
-  },
-  {
-    "_id": "6357eef2920806962f8e5d3d",
-    "weight": 50,
-    "id": 2,
-    "name": "Bench press",
-    "user": "63555fee0c2d46679fde5cf0",
-    "__t": "BenchPress",
-    "date": "2022-10-25T14:13:06.351Z",
-    "__v": 0
-  },
-  {
-    "_id": "6357f0db1e00c0c306cbda89",
-    "weight": 50,
-    "sets": 5,
-    "reps": 7,
-    "id": 2,
-    "name": "Bench press",
-    "user": "63555fee0c2d46679fde5cf0",
-    "__t": "BenchPress",
-    "date": "2022-10-25T14:21:15.625Z",
-    "__v": 0
-  }
+  { "_id": "6357eeee920806962f8e5d3a", "weight": 50, "id": 2, "name": "Bench press", "user": "63555fee0c2d46679fde5cf0", "__t": "BenchPress", "date": "2022-10-25T14:13:02.314Z", "__v": 0 },
+  { "_id": "6357eef2920806962f8e5d3d", "weight": 50, "id": 2, "name": "Bench press", "user": "63555fee0c2d46679fde5cf0", "__t": "BenchPress", "date": "2022-10-25T14:13:06.351Z", "__v": 0 },
+  { "_id": "6357f0db1e00c0c306cbda89", "weight": 50,"sets":5,  "reps": 7, "id": 2, "name": "Bench press", "user": "63555fee0c2d46679fde5cf0", "__t": "BenchPress", "date": "2022-10-25T14:21:15.625Z", "__v": 0 }
 ]
 ```
 
