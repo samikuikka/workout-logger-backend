@@ -203,4 +203,49 @@ Data needs to be send as Array in json format where each exercise needs to at le
 ]
 ```
 
+### GET '/api/workouts' :
+
+Retrieve user own workout templates
+
+#### Request
+
+**Headers**
+| **name** | **required** | **description** | 
+|--|--|--|
+| Authorization | required | in the form of `bearer token` |
+
+#### Response `200`
+
+```json
+[  {  "_id": "6362b840a709d582b6f53afc",  "id": 1,  "name": "Leg workout",  "exercises": [],  "__v": 0  },  {  "_id": "6362b969a709d582b6f53b05",  "id": 2,  "name": "Leg workout",  "exercises": [],  "__v": 0  }  ]
+```
+
+
+### POST '/api/workouts' :
+
+Post a new workout for the user
+
+#### Request
+
+**Headers**
+| **name** | **required** | **description** | 
+|--|--|--|
+| Authorization | required | in the form of `bearer token` |
+| Content-Type | required | needs to be `application/json`  |
+
+**Data paramaters**
+| **field** | **required** | **type** | **description** |
+|--|--|--|--|
+| id | required | number | id of the exercise template |
+| name | required | string | name of the template |
+| exercises | optional | [number] | list of exercise ids |
+
+e.g.,
+```json
+{ "id": 2, "name": "Leg workout" }
+```
+
+**Response** `201`
+
+{  "username": "tester",  "email": "testdasdsa@testasdsadsa.com", "workouts": [  "6362b840a709d582b6f53afc", "6362b969a709d582b6f53b05"  ],  "id": "63555fee0c2d46679fde5cf0"  }
 
