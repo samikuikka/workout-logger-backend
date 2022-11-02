@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
     },
     passwordHash: String,
     email: String,
+    workouts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "WorkoutTemplate"
+    }]
 });
 
 userSchema.plugin(uniqueValidator);

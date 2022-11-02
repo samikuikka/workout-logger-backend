@@ -10,6 +10,7 @@ const userRouter = require('./routes/user');
 const loginRouter = require('./routes/login');
 const exercisesRouter = require('./routes/exercises');
 const exercisesNameRouter = require('./routes/exercise_name');
+const workoutsRouter = require('./routes/workouts');
 
 
 //Express app
@@ -35,6 +36,7 @@ app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter)
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/exercise_names', exercisesNameRouter);
+app.use('/api/workouts', workoutsRouter);
 
 // route "/"
 app.get('/', async (request, response) => {
