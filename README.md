@@ -246,6 +246,6 @@ e.g.,
 ```
 
 **Response** `201`
-
+```json
 {  "username": "tester",  "email": "testdasdsa@testasdsadsa.com", "workouts": [  "6362b840a709d582b6f53afc", "6362b969a709d582b6f53b05"  ],  "id": "63555fee0c2d46679fde5cf0"  }
-
+```
