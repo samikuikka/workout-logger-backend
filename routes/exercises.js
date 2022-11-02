@@ -10,25 +10,25 @@ exercisesRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
 
     //filters
-    const filters = request.query;
+    //const filters = request.query;
 
     const exercises = await Exercise.find({user: user._id})
     
-    const filtered = filter(exercises, filters)
+    //const filtered = filter(exercises, filters)
     
-    response.status(200).json(filtered);
+    response.status(200).json(exercises);
 });
 
 //GET certain type of exercises of the user
 exercisesRouter.get('/:id', userExtractor, async (request, response) => {
     const user = request.user;
     const id = sanitize(request.params.id);
-    const filters = request.query;
+    //const filters = request.query;
 
     const exercises = await Exercise.find({user: user._id, id: id});
-    const filtered = filter(exercises, filters)
+    //const filtered = filter(exercises, filters)
     
-    response.status(200).json(filtered);
+    response.status(200).json(exercises);
 });
 
 exercisesRouter.post('/', userExtractor, async (request, response) => {
