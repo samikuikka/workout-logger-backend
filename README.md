@@ -84,7 +84,7 @@ Content-Type: application/json
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto",
+  "token": "secret_token_fromt_login",
   "username": "tester",
   "id": "63555fee0c2d46679fde5cf0"
 }
@@ -121,7 +121,7 @@ Get all the exercises of the user
 
 |          Name | Required |  Type   | Description                                                                                                                                                           |
 | -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto"   
+|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer secret_token_fromt_login"   
 |
 #### Filters
 
@@ -145,7 +145,7 @@ Get specific type of exercises
 
 |          Name | Required |  Type   | Description                                                                                                                                                           |
 | -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto"                                                                    |
+|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer secret_token_fromt_login"                                                                    |
 
 #### Filters
 
@@ -171,7 +171,7 @@ Post array of exercises
 
 |          Name | Required |  Type   | Description                                                                                                                                                           |
 | -------------:|:--------:|:-------:| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NTM5OTY0fQ.t0gyWCndYkIg3riX9DTlL_MmecCjHCymQpyJ9xU_zto"                                                                    |
+|     `Authorization` | required | string  | In the form of `bearer TOKEN` where token is the JSON Web Token from login, e.g. "bearer secret_token_fromt_login"                                                                    |
 |  `Content-Type`| required | application/json | Data must be sent in json format |
 
 **Data paramaters**
@@ -255,3 +255,34 @@ e.g.,
 ]
 ```
 
+
+### PUT 'api/workouts/:id'
+
+Change the user workout where id is :id
+
+#### Request
+
+**Headers**
+| **name** | **required** | **description** |
+|--|--|--|
+| Authorization | required | in the form of `breare token` |
+| Content-Type | required | `application/json` |
+
+**Data paramaters**
+
+| **field** | **required** | **type** | **description** |
+|--|--|--|--|
+| name | required | string | name of the template |
+| exercises | optional | [number] | list of exercise ids |
+
+e.g.  for '/api/workouts/0'
+```json
+{
+	"name": "Improved leg workout",
+	"exercises": [0,1,1,2]
+}
+```
+#### Response `201`
+```json
+[  "6362b840a709d582b6f53afc",  "6362b969a709d582b6f53b05",  "63637a0d27fd6a5ce9665e55"  ]
+```
