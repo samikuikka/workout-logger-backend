@@ -190,8 +190,56 @@ describe('PUT', () => {
         expect(user.workouts).toHaveLength(2);
         expect(user.workouts.map(e => e.exercises)).toEqual(expect.arrayContaining([[0,0,3], [2,2,2]]));
     });
+});
 
-    
+describe('DELETE', () => {
+    let workout_id = null;
+    let token = null;
 
+    beforeEach( async () => {
+        await WorkoutTemplate.deleteMany({});
+        //Add new workout template
+        const new_w = new WorkoutTemplate({
+            id: 0,
+            name: "Full body",
+            exercises: [0,1,3]
+        });
+        const new_w2 = new WorkoutTemplate({
+            id: 1,
+            name: "another one",
+            exercises: [2,2,2]
+        })
+        const saved = await new_w.save();
+        const saved2 = await new_w2.save();
+        workout_id = saved._id;
+        
+        //Log in before test
+        const passwordHash = await bcrypt.hash('sekret', 10);
+        const user = new User({username: 'test', passwordHash, workouts: [workout_id, saved2._id]});
+        await user.save();
+        let res = await api
+            .post('/api/login')
+            .send({username: 'test', password: 'sekret'});
+        token = res.body.token;
+    });
 
+    test('find the exercises', async () => {
+        const user = await User.findOne({username: 'test'});
+        expect(user.workouts).toHaveLength(2);
+    });
+
+    test('deletion deletes the template with same id as request parameter', async () => {
+
+        await api
+            .delete('/api/workouts/0')
+            .set('Authorization', `bearer ${token}`)
+            .expect(204);
+        
+        const user = await User.findOne({username: 'test'}).populate('workouts');
+        const workouts = user.workouts;
+        
+        expect(workouts).toHaveLength(1);
+        expect(workouts[0].id).toEqual(1);
+        expect(workouts[0].exercises).toEqual([2,2,2]);
+    });
 });

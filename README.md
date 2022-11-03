@@ -286,3 +286,15 @@ e.g.  for '/api/workouts/0'
 ```json
 [  "6362b840a709d582b6f53afc",  "6362b969a709d582b6f53b05",  "63637a0d27fd6a5ce9665e55"  ]
 ```
+
+### DELETE '/api/workouts/:id' :
+Delete the workout template with the id = :id in users workout list
+
+#### Request
+
+**Headers**
+| **name** | **required** | **description** |
+|--|--|--|
+| Authorization | required | in the form of `breare token` |
+
+#### Response `204`

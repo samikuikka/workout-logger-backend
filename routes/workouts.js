@@ -71,4 +71,17 @@ workoutsRouter.put('/:id',userExtractor,  async (request, response) => {
     return response.status(201).json(res.workouts); 
 });
 
+
+//Post workout from the user workout list
+workoutsRouter.delete('/:id', userExtractor, async (request, response) => {
+    const user = request.user;
+
+    let db_user = await User.findById(user._id).populate('workouts');
+    const filtered = db_user.workouts.filter( workout => workout.id != request.params.id);
+    db_user.workouts = filtered.map( workout => workout._id);
+    await db_user.save();
+
+    return response.status(204).end();
+});
+
 module.exports = workoutsRouter;
