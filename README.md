@@ -242,10 +242,16 @@ Post a new workout for the user
 
 e.g.,
 ```json
-{ "id": 2, "name": "Leg workout" }
+{ "id": 3, "name": "Leg workout" }
 ```
 
 **Response** `201`
 
-{  "username": "tester",  "email": "testdasdsa@testasdsadsa.com", "workouts": [  "6362b840a709d582b6f53afc", "6362b969a709d582b6f53b05"  ],  "id": "63555fee0c2d46679fde5cf0"  }
+```json
+[
+  "6362b840a709d582b6f53afc",
+  "6362b969a709d582b6f53b05",
+  "63637a0d27fd6a5ce9665e55"
+]
+```
 

@@ -42,7 +42,33 @@ workoutsRouter.post('/', userExtractor, async (request, response) => {
     current_user.workouts = [...current_user.workouts, saved._id];
     const res = await current_user.save();
 
-    response.status(201).json(res);
+    response.status(201).json(res.workouts);
+});
+
+//Change users workout
+workoutsRouter.put('/:id',userExtractor,  async (request, response) => {
+    const body = request.body;
+    const user = request.user;
+
+    // Request should at least have name
+    if(body.name == null) {
+        return response.status(400).send('name required');
+    }
+
+    
+    // Create new template to the db
+    const template = new WorkoutTemplate({
+        ...body,
+        id: request.params.id
+    });
+    const saved = await template.save();
+
+    //Update the users workout list
+    let db_user = await User.findById(user._id).populate('workouts');
+    db_user.workouts = db_user.workouts.map( workout => workout.id == saved.id ? saved._id : workout._id);
+    const res = await db_user.save();
+    
+    return response.status(201).json(res.workouts); 
 });
 
 module.exports = workoutsRouter;

@@ -131,11 +131,67 @@ describe('POST', () => {
         // now user should have two workouts
         const user = await User.findOne({username: 'test'}).populate('workouts');
         expect(user.workouts).toHaveLength(2);
-        expect(response.body.workouts).toHaveLength(2);
+        expect(response.body).toHaveLength(2);
         
         //and newly added workout should be accessible from the user
         expect(user.workouts.map(e => e.name)).toEqual(expect.arrayContaining(['Leg workout']));
         expect(user.workouts.map(e => e.exercises)).toEqual(expect.arrayContaining([[1,2,4]]))
     });
+
+});
+
+describe('PUT', () => {
+    let workout_id = null;
+    let token = null;
+
+    beforeEach( async () => {
+        await WorkoutTemplate.deleteMany({});
+        //Add new workout template
+        const new_w = new WorkoutTemplate({
+            id: 0,
+            name: "Full body",
+            exercises: [0,1,3]
+        });
+        const new_w2 = new WorkoutTemplate({
+            id: 1,
+            name: "another one",
+            exercises: [2,2,2]
+        })
+        const saved = await new_w.save();
+        const saved2 = await new_w2.save();
+        workout_id = saved._id;
+        
+        //Log in before test
+        const passwordHash = await bcrypt.hash('sekret', 10);
+        const user = new User({username: 'test', passwordHash, workouts: [workout_id, saved2._id]});
+        await user.save();
+        let res = await api
+            .post('/api/login')
+            .send({username: 'test', password: 'sekret'});
+        token = res.body.token;
+    });
+
+    test('at the start, only 1 workout with exercises [0,1,3]', async () => {
+        const user = await User.findOne({username: 'test'}).populate('workouts');
+        expect(user.workouts).toHaveLength(2);
+        expect(user.workouts.map(e => e.exercises)).toEqual(expect.arrayContaining([[2,2,2], [0,1,3]]));
+    });
+
+    test('put changes workout', async () => {
+        const response = await api
+            .put('/api/workouts/0')
+            .send({name: 'Leg workout', exercises: [0,0,3]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+        
+        
+        //user workouts changed
+        const user = await User.findOne({username: 'test'}).populate('workouts');
+        expect(user.workouts).toHaveLength(2);
+        expect(user.workouts.map(e => e.exercises)).toEqual(expect.arrayContaining([[0,0,3], [2,2,2]]));
+    });
+
+    
+
 
 });
