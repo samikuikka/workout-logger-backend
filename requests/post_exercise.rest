@@ -1,15 +1,15 @@
 POST http://localhost:4005/api/exercises
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NzA3MDEzfQ.jJsBRqMJPKL1yKaOYsnm7s9jqCjWkJCNepqSqcmnvQU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM2Mjc2OTY2MDgyZTQyYzk0MmM5OWE4IiwiaWF0IjoxNjY3ODIzMjIyfQ.EZz3sitpRa8Fi_DtvRlL2e78M3BRgdGa9HfRjNKHiBY
 Content-Type: application/json
 
 [
     {
         "id": 3,
-        "weight": 50,
+        "weight": 100,
         "sets": 5,
         "reps": 7
     },
     {
-        "id": 0
+        "id": 1
     }
 ]

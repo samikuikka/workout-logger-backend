@@ -11,7 +11,7 @@ const loginRouter = require('./routes/login');
 const exercisesRouter = require('./routes/exercises');
 const exercisesNameRouter = require('./routes/exercise_name');
 const workoutsRouter = require('./routes/workouts');
-
+const sessionRouter = require('./routes/workoutSession');
 
 //Express app
 const app = express();
@@ -37,6 +37,7 @@ app.use('/api/login', loginRouter)
 app.use('/api/exercises', exercisesRouter);
 app.use('/api/exercise_names', exercisesNameRouter);
 app.use('/api/workouts', workoutsRouter);
+app.use('/api/workout_session', sessionRouter);
 
 // route "/"
 app.get('/', async (request, response) => {

@@ -17,12 +17,19 @@ const workoutSessionSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    // List of exercise ids
+    // List of exercises
     exercises: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Exercise'
-    }
-    ]
+        _id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Exercise'
+        },
+        name: {
+            type: String,
+        },
+        weight: Number,
+        reps: Number,
+        duration: Number
+    }]
 })
 
 const WorkoutSession = mongoose.model('WorkoutSession', workoutSessionSchema);

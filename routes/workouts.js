@@ -2,6 +2,7 @@ const workoutsRouter = require('express').Router();
 const WorkoutTemplate = require('../models/WorkoutTemplate');
 const { userExtractor } = require('../utils/middleware');
 const User = require('../models/User');
+const ExerciseName = require('../models/ExerciseName')
 
 //Get all the workouts of the user
 workoutsRouter.get('/', userExtractor, async (request, response) => {
@@ -10,7 +11,7 @@ workoutsRouter.get('/', userExtractor, async (request, response) => {
     //Get the user
     const obj = await User
         .findById(user._id)
-        .populate('workouts');
+        .populate('workouts')
 
     response.status(200).json(obj.workouts);
 });
@@ -19,7 +20,7 @@ workoutsRouter.get('/', userExtractor, async (request, response) => {
 workoutsRouter.post('/', userExtractor, async (request, response) => {
     const body = request.body;
     const user = request.user;
-    
+    console.log(body)
     // Request should at least have id and name
     if(body.id == null || body.name == null) {
         return response.status(400).send('id and name required');

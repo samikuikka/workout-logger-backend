@@ -1,4 +1,0 @@
-GET http://localhost:4005/api/exercises
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlciIsImlkIjoiNjM1NTVmZWUwYzJkNDY2NzlmZGU1Y2YwIiwiaWF0IjoxNjY2NzA3MjM5fQ.JmDybHvbwV8a6rhWLjRLhHKRWkXWnZLKBR072b_UUjU
-
-
