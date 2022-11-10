@@ -21,7 +21,8 @@ const workoutSessionSchema = new mongoose.Schema({
     exercises: [{
         _id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Exercise'
+            ref: 'Exercise',
+            required: true
         },
         name: {
             type: String,

@@ -298,3 +298,84 @@ Delete the workout template with the id = :id in users workout list
 | Authorization | required | in the form of `breare token` |
 
 #### Response `204`
+
+
+### GET '/api/workout_session' :
+
+Retrieve users own workout sessions
+
+#### Request
+
+**Headers**
+| **name** | **required** | **description** | 
+|--|--|--|
+| Authorization | required | in the form of `bearer token` |
+
+#### Response `200`
+```json
+[{
+    "_id": "636bae151b2e51a8a7804f34",
+    "user": "636276966082e42c942c99a8",
+    "exercises": [
+      {
+        "_id": "636bae151b2e51a8a7804f30",
+        "name": "Deadlift",
+        "weight": 100,
+        "reps": 3
+      },
+      {
+        "_id": "636bae151b2e51a8a7804f31",
+        "name": "squat",
+        "weight": 80,
+        "reps": 8
+      }
+    ],
+    "date": "2022-11-09T13:41:41.067Z",
+    "__v": 0
+  }]
+```
+
+
+### POST /api/workout_session
+
+Post a new workout session for current user
+
+| Name | Required |  Type   | Description |
+| --- | :---: | :---: | --- |
+|  `Authorization` | required | string | In the form of `bearer TOKEN` where token is the JSON Web Token from login
+|  `Content-Type`  | required | application/json | Data must be sent in json format  |
+
+
+**Data paramaters**
+
+Data needs to be send as in json format with users id and an Array of exercises where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
+
+```json
+{
+    "user": "636276966082e42c942c99a8",
+    "exercises": [{
+        "id": 3,
+        "name": "Deadlift",
+        "weight": 100,
+        "sets": 5,
+        "reps": 3
+    },
+    {
+        "id": 1,
+        "name": "squat",
+        "weight": 80,
+        "sets": 3,
+        "reps": 8
+    }
+]
+```
+
+**Response `201`**
+
+```json 
+[  
+  "636bae151b2e51a8a7804f34",
+  "636bb05f6099a0c14fc800e9",
+  "636bb0e6c8e5b633985b5d70"
+]
+```
