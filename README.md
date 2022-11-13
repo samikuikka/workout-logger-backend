@@ -315,7 +315,7 @@ Retrieve users own workout sessions
 
 | **filter name** | **possible types** | **description** | **example** |
 |--|--|--|--|
-| date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/exercises?date_range=month |
+| date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/workout_session?date_range=month |
 
 #### Response `200`
 ```json
@@ -360,7 +360,12 @@ Post a new workout session for current user
 
 **Data paramaters**
 
-  
+  **Data paramaters**
+
+| **field** | **required** | **type** | **description** |
+|--|--|--|--|
+| date | optional | date | date of the session, if not provided then today's date chosen |
+| exercises | required | [exercises] | list of exercises for session |
 
 Data needs to be send as in json format  Array of exercises where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
 
