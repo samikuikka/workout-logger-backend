@@ -338,44 +338,57 @@ Retrieve users own workout sessions
 
 ### POST /api/workout_session
 
+  
+
 Post a new workout session for current user
 
-| Name | Required |  Type   | Description |
-| --- | :---: | :---: | --- |
-|  `Authorization` | required | string | In the form of `bearer TOKEN` where token is the JSON Web Token from login
-|  `Content-Type`  | required | application/json | Data must be sent in json format  |
+  
 
+| Name | Required | Type | Description |
+
+| --- | :---: | :---: | --- |
+
+| `Authorization` | required | string | In the form of `bearer TOKEN` where token is the JSON Web Token from login
+
+| `Content-Type` | required | application/json | Data must be sent in json format |
+
+  
+  
 
 **Data paramaters**
 
-Data needs to be send as in json format with users id and an Array of exercises where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
+  
+
+Data needs to be send as in json format  Array of exercises where each exercise needs to at least needs to have **id** (exercise id, check out /api/exercise_name )
 
 ```json
 {
-    "user": "636276966082e42c942c99a8",
-    "exercises": [{
-        "id": 3,
-        "name": "Deadlift",
-        "weight": 100,
-        "sets": 5,
-        "reps": 3
-    },
-    {
-        "id": 1,
-        "name": "squat",
-        "weight": 80,
-        "sets": 3,
-        "reps": 8
-    }
-]
+	"exercises": [{
+		"id": 3,
+		"name": "Deadlift",
+		"weight": 100,
+		"sets": 5,
+		"reps": 3
+	},
+	{
+		"id": 1,
+		"name": "squat",
+		"weight": 80,
+		"sets": 3,
+		"reps": 8
+	}]
+}
 ```
+  
+
+  
 
 **Response `201`**
 
-```json 
-[  
-  "636bae151b2e51a8a7804f34",
-  "636bb05f6099a0c14fc800e9",
-  "636bb0e6c8e5b633985b5d70"
-]
+  
+
+```json
+
+[  "6371092a5d5dfc538f4e656c"  ]
+
 ```

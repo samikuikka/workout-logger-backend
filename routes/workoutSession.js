@@ -18,7 +18,7 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
 sessionsRouter.post('/', userExtractor, async (request, response) => {
     const body = request.body;
     const user = request.user;
-    console.log("body: ", request.body);
+    //console.log("body: ", request.body);
     if(user === null) {
         return response.status(400).send('user for the session is needed')
     }
@@ -35,12 +35,12 @@ sessionsRouter.post('/', userExtractor, async (request, response) => {
     if(!body.exercises.every((exercise) => typeof exercise.id === "number" && exercise.id >= 0)) {
         return response.status(400).send('All of the exercises did not have id');
     }
-    const exercises = await Exercise.create(body.exercises, user)
-    console.log("exercises: ", exercises)
+    const exercises = await Exercise.create(body.exercises)
+    const exercise_ids = exercises.map(e => e._id);
 
     // Create a new session
     const session = new WorkoutSession({
-        user, exercises
+        user, exercises: exercise_ids
     });
     const saved = await session.save();
 
