@@ -315,7 +315,7 @@ Retrieve users own workout sessions
 
 | **filter name** | **possible types** | **description** | **example** |
 |--|--|--|--|
-| date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/exercises?date_range=month |
+| date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/workout_session?date_range=month |
 
 #### Response `200`
 ```json
