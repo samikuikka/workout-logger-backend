@@ -11,7 +11,12 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
 
     const obj = await User
         .findById(user._id)
-        .populate('sessions');
+        .populate({
+            path: 'sessions',
+            populate: {
+                path: 'exercises'
+            }
+        });
 
     const filtered = filter(obj.sessions, filters);
 

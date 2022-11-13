@@ -236,4 +236,22 @@ describe('GET', () => {
         expect(response.body).toHaveLength(1);
         
     })
+
+    test('exercises have been populated', async () => {
+        await api
+            .post('/api/workout_session')
+            .send({exercises: exercises})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+
+        const response = await api
+            .get('/api/workout_session')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+
+        expect(response.body).toHaveLength(1);
+        
+        expect(response.body[0].exercises).toHaveLength(2)
+        expect(response.body[0].exercises.map(e => e.name)).toEqual(expect.arrayContaining(["Deadlift", 'squat']))
+    })
 })
