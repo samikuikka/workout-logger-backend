@@ -3,11 +3,31 @@ const app = require('../app');
 const api = supertest(app);
 const bcrypt = require('bcrypt');
 
+var sub = require('date-fns/sub')
+var add = require('date-fns/add')
+
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
 const ExerciseName = require('../models/ExerciseName');
 const WorkoutSession = require('../models/WorkoutSession');
 const WorkoutTemplate = require('../models/WorkoutTemplate');
+
+
+const exercises = [ {
+    id: 3,
+    name: "Deadlift",
+    weight: 100,
+    sets: 5,
+    reps: 3
+},
+{
+    id: 1,
+    name: "squat",
+    weight: 80,
+    sets: 3,
+    reps: 8
+}
+]
 
 //reset db for tests
 // reset database for tests
@@ -25,7 +45,7 @@ beforeEach( async () => {
     );
 });
 
-describe('by week', () => {
+describe('filters', () => {
     let workout_id = null;
     let token = null;
 
@@ -50,14 +70,101 @@ describe('by week', () => {
         let res = await api
             .post('/api/login')
             .send({username: 'test', password: 'sekret'});
-        token = res.body.token;
-
-        
+        token = res.body.token;    
         
     });
 
-    test('empty', async () =>  {
+    test('does not filter without filter parameter', async () =>  {
+        const date = sub(new Date(), {years: 3});
+        for(let i = 0; i < 5; i++) {
+            await api
+                .post('/api/workout_session')
+                .send({exercises: exercises, date: date})
+                .set('Authorization', `bearer ${token}`)
+                .expect(201);
+        }
+        
+        const response = await api
+            .get('/api/workout_session')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body).toHaveLength(5);
+    });
 
-    })
+    test('can filter by week', async () => {
+        const lastweek = sub(new Date(), {days: 7});
+        const now = new Date();
+        const nextweek = add(new Date(), {days: 7});
+        const dates = [lastweek, now, nextweek]
+        for(let i = 0; i < 3; i++) {
+            await api
+            .post('/api/workout_session')
+            .send({exercises: exercises, date: dates[i]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+        }
+
+        const sessions = await WorkoutSession.find({});
+        expect(sessions).toHaveLength(3);
+
+        const response = await api
+            .get('/api/workout_session?date_range=week')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body).toHaveLength(1);
+        expect(new Date(response.body[0].date)).toEqual(now);
+    });
+
+    test('can filter by month', async () => {
+        const lastmonth = sub(new Date(), {months: 7});
+        const now = new Date();
+        const nextmonth = add(new Date(), {months: 7});
+        const dates = [lastmonth, now, nextmonth]
+        for(let i = 0; i < 3; i++) {
+            await api
+            .post('/api/workout_session')
+            .send({exercises: exercises, date: dates[i]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+        }
+
+        const sessions = await WorkoutSession.find({});
+        expect(sessions).toHaveLength(3);
+
+        const response = await api
+            .get('/api/workout_session?date_range=month')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body).toHaveLength(1);
+        expect(new Date(response.body[0].date)).toEqual(now);
+    });
+
+    test('can filter by year', async () => {
+        const lastyear = sub(new Date(), {years: 7});
+        const now = new Date();
+        const nextyear = add(new Date(), {years: 7});
+        const dates = [lastyear, now, nextyear]
+        for(let i = 0; i < 3; i++) {
+            await api
+            .post('/api/workout_session')
+            .send({exercises: exercises, date: dates[i]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+        }
+
+        const sessions = await WorkoutSession.find({});
+        expect(sessions).toHaveLength(3);
+
+        const response = await api
+            .get('/api/workout_session?date_range=year')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body).toHaveLength(1);
+        expect(new Date(response.body[0].date)).toEqual(now);
+    });
 
 })

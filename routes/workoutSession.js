@@ -3,15 +3,19 @@ const WorkoutSession = require('../models/WorkoutSession');
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
 const { userExtractor } = require('../utils/middleware');
+const { filter } = require('../services/filterService');
 
 sessionsRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
+    const filters = request.query;
 
     const obj = await User
         .findById(user._id)
-        .populate('sessions')
+        .populate('sessions');
 
-    response.status(200).json(obj.sessions)
+    const filtered = filter(obj.sessions, filters);
+
+    response.status(200).json(filtered)
 })
 
 // Add new workout session to the users workout sessions
@@ -40,7 +44,7 @@ sessionsRouter.post('/', userExtractor, async (request, response) => {
 
     // Create a new session
     const session = new WorkoutSession({
-        user, exercises: exercise_ids
+        ...body, user, exercises: exercise_ids
     });
     const saved = await session.save();
 

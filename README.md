@@ -311,6 +311,12 @@ Retrieve users own workout sessions
 |--|--|--|
 | Authorization | required | in the form of `bearer token` |
 
+#### Filters
+
+| **filter name** | **possible types** | **description** | **example** |
+|--|--|--|--|
+| date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/exercises?date_range=month |
+
 #### Response `200`
 ```json
 [{

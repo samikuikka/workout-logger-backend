@@ -1,4 +1,3 @@
-const Exercise = require('../models/Exercise');
 var isThisWeek = require('date-fns/isThisWeek');
 var isThisMonth = require('date-fns/isThisMonth')
 var isThisYear = require('date-fns/isThisYear')
@@ -9,15 +8,15 @@ var isThisYear = require('date-fns/isThisYear')
 *       -date_range {"week", "month", "year"} : filter by the given date range
 *
 */
-const filter = (exercises, filters) => {
-    const filteredExercises = exercises.filter( exercise => {
+const filter = (sessions, filters) => {
+    const filteredSessions = sessions.filter( session => {
         let isValid = true;
 
         for(key in filters) {
             //console.log(key, filters[key]);
             switch (key) {
                 case 'date_range':
-                    isValid = isValid && dateFilter(exercise, filters[key])
+                    isValid = isValid && dateFilter(session, filters[key])
                 default:
                     isValid = isValid;
             }
@@ -25,21 +24,21 @@ const filter = (exercises, filters) => {
 
        return isValid;
     })
-    return filteredExercises
+    return filteredSessions
 }
 
-//Check if date of an exercise in the given time-frame
-const dateFilter = (exercise, time) => {
+//Check if date of an session in the given time-frame
+const dateFilter = (session, time) => {
     let flag = true;
     switch (time) {
         case 'week':
-            flag = isThisWeek(exercise.date);
+            flag = isThisWeek(session.date);
             break;
         case 'month':
-            flag = isThisMonth(exercise.date);
+            flag = isThisMonth(session.date);
             break;
         case 'year':
-            flag = isThisYear(exercise.date);
+            flag = isThisYear(session.date);
             break;
         default:
             flag = flag

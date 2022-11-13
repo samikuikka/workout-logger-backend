@@ -2,6 +2,7 @@ const supertest = require('supertest');
 const app = require('../app');
 const api = supertest(app);
 const bcrypt = require('bcrypt');
+var sub = require('date-fns/sub')
 
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
@@ -149,9 +150,28 @@ describe('POST', () => {
             .toEqual(
                 expect.arrayContaining([3, 1])
         );
+             
+    });
+
+
+    test('custom date for exercise can be added', async () => {
+        const yesterday = sub(new Date(), { days: 1});
+
+        await api
+            .post('/api/workout_session')
+            .send({exercises: exercises, date: yesterday})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+
+        // Only 1 session in the db
+        const all_sessions = await WorkoutSession.find({}).populate('exercises');
+        expect(all_sessions).toHaveLength(1);
+
+        // Session has two exercises
+        const session = all_sessions[0];
+        expect(session.date).toEqual(yesterday);
         
-        
-    })
+    });
 })
 
 
@@ -212,7 +232,7 @@ describe('GET', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
 
-            
+
         expect(response.body).toHaveLength(1);
         
     })
