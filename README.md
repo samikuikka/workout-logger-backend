@@ -351,11 +351,8 @@ Post a new workout session for current user
   
 
 | Name | Required | Type | Description |
-
 | --- | :---: | :---: | --- |
-
 | `Authorization` | required | string | In the form of `bearer TOKEN` where token is the JSON Web Token from login
-
 | `Content-Type` | required | application/json | Data must be sent in json format |
 
   
