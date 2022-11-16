@@ -20,21 +20,26 @@ workoutsRouter.get('/', userExtractor, async (request, response) => {
 workoutsRouter.post('/', userExtractor, async (request, response) => {
     const body = request.body;
     const user = request.user;
-    console.log(body)
-    // Request should at least have id and name
-    if(body.id == null || body.name == null) {
-        return response.status(400).send('id and name required');
+    
+    // Request should at least have  name
+    if(body.name == null) {
+        return response.status(400).send('name required');
     }
 
     //Check that no dublicate id
     const user_model = await User.findById(user._id).populate('workouts');
-    if(user_model.workouts.some(workout => workout.id === body.id) ) {
-        return response.status(400).send('duplicate id');
+    let template_id = Math.random() * 8000000 + 1000000;
+
+    if("id" in body) {
+        if(user_model.workouts.some(workout => workout.id == body.id) ) {
+            return response.status(400).send('duplicate id');
+        }
+        template_id = body.id;
     }
 
     // Create new template to the db
     const template = new WorkoutTemplate({
-        ...body
+        id: template_id, ...body,
     });
     const saved = await template.save();
 

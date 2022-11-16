@@ -236,13 +236,13 @@ Post a new workout for the user
 **Data paramaters**
 | **field** | **required** | **type** | **description** |
 |--|--|--|--|
-| id | required | number | id of the exercise template |
+| id | optional | number | custom id of the exercise template |
 | name | required | string | name of the template |
 | exercises | optional | [number] | list of exercise ids |
 
 e.g.,
 ```json
-{ "id": 3, "name": "Leg workout" }
+{ "name": "Leg workout" }
 ```
 
 **Response** `201`
