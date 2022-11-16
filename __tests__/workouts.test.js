@@ -103,13 +103,13 @@ describe('POST', () => {
         expect(user.workouts[0].name).toBe('Full body');
     });
 
-    test('request without id or name gets rejected', async () => {
+    test('request without name gets rejected', async () => {
         const response = await api
             .post('/api/workouts')
             .set('Authorization', `bearer ${token}`)
             .send({id: 2})
             .expect(400);
-        expect(response.text).toBe('id and name required')
+        expect(response.text).toBe('name required')
     });
 
     test('no dublicate ids accepted', async () => {
@@ -137,6 +137,22 @@ describe('POST', () => {
         expect(user.workouts.map(e => e.name)).toEqual(expect.arrayContaining(['Leg workout']));
         expect(user.workouts.map(e => e.exercises)).toEqual(expect.arrayContaining([[1,2,4]]))
     });
+
+    test('can post template without id', async () => {
+        const response = await api
+            .post('/api/workouts')
+            .send({name: 'workout without id', exercises: [1,2,2]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201)
+        
+        // now user should have two workouts
+        const user = await User.findOne({username: 'test'}).populate('workouts');
+        expect(user.workouts).toHaveLength(2);
+        expect(response.body).toHaveLength(2);
+
+        //and newly added workout should be accessible from the user
+        expect(user.workouts.map(e => e.name)).toEqual(expect.arrayContaining(['workout without id']));
+    })
 
 });
 
