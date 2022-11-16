@@ -10,8 +10,10 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
     const obj = await User
         .findById(user._id)
         .populate('sessions')
+        
+    const sorted = obj.sessions.sort((a, b) => {return b.date - a.date})
 
-    response.status(200).json(obj.sessions)
+    response.status(200).json(sorted)
 })
 
 // Add new workout session to the users workout sessions
