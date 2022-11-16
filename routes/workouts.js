@@ -28,7 +28,7 @@ workoutsRouter.post('/', userExtractor, async (request, response) => {
 
     //Check that no dublicate id
     const user_model = await User.findById(user._id).populate('workouts');
-    let template_id = Math.random() * 8000000 + 1000000;
+    let template_id = Math.ceil(Math.random() * 8000000 + 1000000);
 
     if("id" in body) {
         if(user_model.workouts.some(workout => workout.id == body.id) ) {
