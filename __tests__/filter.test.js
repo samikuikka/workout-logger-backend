@@ -89,7 +89,7 @@ describe('filters', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
         
-        expect(response.body).toHaveLength(5);
+        expect(response.body.sessions).toHaveLength(5);
     });
 
     test('can filter by week', async () => {
@@ -113,8 +113,8 @@ describe('filters', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
         
-        expect(response.body).toHaveLength(1);
-        expect(new Date(response.body[0].date)).toEqual(now);
+        expect(response.body.sessions).toHaveLength(1);
+        expect(new Date(response.body.sessions[0].date)).toEqual(now);
     });
 
     test('can filter by month', async () => {
@@ -138,8 +138,8 @@ describe('filters', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
         
-        expect(response.body).toHaveLength(1);
-        expect(new Date(response.body[0].date)).toEqual(now);
+        expect(response.body.sessions).toHaveLength(1);
+        expect(new Date(response.body.sessions[0].date)).toEqual(now);
     });
 
     test('can filter by year', async () => {
@@ -163,8 +163,8 @@ describe('filters', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
         
-        expect(response.body).toHaveLength(1);
-        expect(new Date(response.body[0].date)).toEqual(now);
+        expect(response.body.sessions).toHaveLength(1);
+        expect(new Date(response.body.sessions[0].date)).toEqual(now);
     });
 
 })

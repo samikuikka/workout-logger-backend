@@ -302,7 +302,8 @@ Delete the workout template with the id = :id in users workout list
 
 ### GET '/api/workout_session' :
 
-Retrieve users own workout sessions
+Retrieve users own workout sessions.
+Shows only 10 sessions at the time, page number can be used to show next 10 sessions.
 
 #### Request
 
@@ -316,29 +317,16 @@ Retrieve users own workout sessions
 | **filter name** | **possible types** | **description** | **example** |
 |--|--|--|--|
 | date_range | ["week", "month", "year"] | filter exercises by this week, this month or this year | /api/workout_session?date_range=month |
+| page | number | pagination number, currently shows only 10 sessions for each page | /api/workout_session?page=1 |
 
 #### Response `200`
 ```json
-[{
-    "_id": "636bae151b2e51a8a7804f34",
-    "user": "636276966082e42c942c99a8",
-    "exercises": [
-      {
-        "_id": "636bae151b2e51a8a7804f30",
-        "name": "Deadlift",
-        "weight": 100,
-        "reps": 3
-      },
-      {
-        "_id": "636bae151b2e51a8a7804f31",
-        "name": "squat",
-        "weight": 80,
-        "reps": 8
-      }
-    ],
-    "date": "2022-11-09T13:41:41.067Z",
-    "__v": 0
-  }]
+{  
+	"pages": 4, //HOW MANY PAGES  
+	"page": 0,  // CURRENT PAGE
+	"sessions": [  {  "_id": "6374ddb2b50a6b33feb9ca6b",  "date": "2022-11-16T12:55:05.654Z",  "user": "63555fee0c2d46679fde5cf0",  "exercises": [  {  "_id": "6374ddb2b50a6b33feb9ca65",  "id": 1,  "name": "Squat",  "weight": 0,  "reps": 0,  "__v": 0  },  {  "_id": "6374ddb2b50a6b33feb9ca66",  "id": 4,  "name": "T-bar row",  "weight": 0,  "reps": 0,  "__v": 0  },  {  "_id": "6374ddb2b50a6b33feb9ca67",  "id": 4,  "name": "T-bar row",  "weight": 0,  "reps": 0,  "__v": 0  }  ],  "__v": 0  } // AND REST OF THE SESSIONS...  
+		]  
+	}
 ```
 
 

@@ -212,7 +212,7 @@ describe('GET', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
 
-        expect(response.body).toHaveLength(0);
+        expect(response.body.sessions).toHaveLength(0);
     });
 
     test('can find sessions of the user', async () => {
@@ -233,7 +233,7 @@ describe('GET', () => {
             .expect(200);
 
 
-        expect(response.body).toHaveLength(1);
+        expect(response.body.sessions).toHaveLength(1);
         
     })
 
@@ -249,9 +249,9 @@ describe('GET', () => {
             .set('Authorization', `bearer ${token}`)
             .expect(200);
 
-        expect(response.body).toHaveLength(1);
+        expect(response.body.sessions).toHaveLength(1);
         
-        expect(response.body[0].exercises).toHaveLength(2)
-        expect(response.body[0].exercises.map(e => e.name)).toEqual(expect.arrayContaining(["Deadlift", 'squat']))
+        expect(response.body.sessions[0].exercises).toHaveLength(2)
+        expect(response.body.sessions[0].exercises.map(e => e.name)).toEqual(expect.arrayContaining(["Deadlift", 'squat']))
     })
 })

@@ -3,26 +3,76 @@ const WorkoutSession = require('../models/WorkoutSession');
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
 const { userExtractor } = require('../utils/middleware');
-const { filter } = require('../services/filterService');
+var add = require('date-fns/add')
+var sub = require('date-fns/sub')
+
+//Date helpers
+const { startOfYear, endOfYear, endOfMonth, startOfMonth, startOfWeek, endOfWeek } = require('date-fns');
 
 sessionsRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
     const filters = request.query;
 
+    const perPage = 10;
+    const page = filters['page'] > 0 ? filters['page'] : 0;
+
+    const now = new Date();
+    let maxDate = add(now, { years: 1});
+    let minDate = sub(now, { years: 10});
+
+    switch(filters["date_range"]) {
+        case 'week':
+            maxDate = endOfWeek(now);
+            minDate = startOfWeek(now);
+            break;
+        case 'month':
+            maxDate = endOfMonth(now);
+            minDate = startOfMonth(now)
+            break;
+        case 'year':
+            maxDate = endOfYear(now);
+            minDate = startOfYear(now);
+            break;
+        default:         
+    }
+
     const obj = await User
         .findById(user._id)
         .populate({
             path: 'sessions',
+            match: { "date": {
+                "$gte": minDate,
+                "$lt": maxDate
+            }},
+            options: {
+                limit: perPage,
+                sort: { date: -1},
+                skip: page * perPage
+            },
+
             populate: {
                 path: 'exercises'
             }
         });
+    
+    const all = await User
+        .findById(user._id)
+        .populate({
+            path: 'sessions',
+            match: { "date": {
+                "$gte": minDate,
+                "$lt": maxDate
+            }},
+        });
 
-    const filtered = filter(obj.sessions, filters);
-
-    const sorted = filtered.sort((a, b) => {return b.date - a.date})
-
-    response.status(200).json(sorted)
+    const count = all.sessions.length;
+    const res = {
+        pages: Math.ceil(count / perPage),
+        page: page,
+        sessions: obj.sessions
+    }
+    
+    response.status(200).json(res)
 })
 
 // Add new workout session to the users workout sessions
