@@ -20,7 +20,9 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
 
     const filtered = filter(obj.sessions, filters);
 
-    response.status(200).json(filtered)
+    const sorted = filtered.sort((a, b) => {return b.date - a.date})
+
+    response.status(200).json(sorted)
 })
 
 // Add new workout session to the users workout sessions
