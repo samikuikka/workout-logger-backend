@@ -113,6 +113,28 @@ Get all the exercise types in the db and exercise ids
 ]
 ```
 
+### POST /api/exercise_names
+
+POST new exercise name (i.e. new exercise type) to the application
+
+**Headers**
+```javascript
+Content-Type: application/json
+```
+
+**Data paramater **
+
+```json
+{
+	"exercise": "My own exercise"
+}
+```
+
+** Response ** `201`
+```javascript
+{  "exercise": "Lunges",  "id": 13  }
+```
+
 ### GET /api/exercises
 
 Get all the exercises of the user

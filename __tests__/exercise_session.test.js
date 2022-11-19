@@ -253,5 +253,23 @@ describe('GET', () => {
         
         expect(response.body.sessions[0].exercises).toHaveLength(2)
         expect(response.body.sessions[0].exercises.map(e => e.name)).toEqual(expect.arrayContaining(["Deadlift", 'squat']))
+    });
+
+    // BUG ABOUT NOT FOUNDING SETS
+    test.only('exercises can have sets', async () => {
+        await api
+            .post('/api/workout_session')
+            .send({exercises: exercises})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+
+        const response = await api
+            .get('/api/workout_session')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body.sessions).toHaveLength(1);
+        console.log(response.body);
+        expect(response.body.sessions[0].exercises.map(e => e.sets)).toEqual(expect.arrayContaining([5,3]));
     })
 })

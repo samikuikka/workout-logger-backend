@@ -2,5 +2,5 @@ POST http://localhost:4005/api/exercise_names
 Content-Type: application/json
 
 {
-    "exercise": "Run"
+    "exercise": "Lunges"
 }
