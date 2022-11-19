@@ -126,7 +126,7 @@ Content-Type: application/json
 
 ```json
 {
-	"exercise": "My own exercise"
+	"exercise": "Lunges"
 }
 ```
 
