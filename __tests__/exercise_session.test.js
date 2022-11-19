@@ -256,7 +256,7 @@ describe('GET', () => {
     });
 
     // BUG ABOUT NOT FOUNDING SETS
-    test.only('exercises can have sets', async () => {
+    test('exercises can have sets', async () => {
         await api
             .post('/api/workout_session')
             .send({exercises: exercises})

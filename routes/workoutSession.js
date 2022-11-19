@@ -3,6 +3,7 @@ const WorkoutSession = require('../models/WorkoutSession');
 const User = require('../models/User');
 const Exercise = require('../models/Exercise');
 const { userExtractor } = require('../utils/middleware');
+var sanitize = require('mongo-sanitize');
 var add = require('date-fns/add')
 var sub = require('date-fns/sub')
 
@@ -11,7 +12,7 @@ const { startOfYear, endOfYear, endOfMonth, startOfMonth, startOfWeek, endOfWeek
 
 sessionsRouter.get('/', userExtractor, async (request, response) => {
     const user = request.user;
-    const filters = request.query;
+    const filters = sanitize(request.query);
 
     const perPage = 10;
     const page = filters['page'] > 0 ? filters['page'] : 0;

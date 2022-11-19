@@ -2,10 +2,11 @@ const loginRouter = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+var sanitize = require('mongo-sanitize');
 
 // post to '/api/login' to log in user
 loginRouter.post('/', async (request, response) => {
-    const body = request.body;
+    const body = sanitize(request.body);
 
     //Find the user
     const user = await User.findOne({ username: body.username });
