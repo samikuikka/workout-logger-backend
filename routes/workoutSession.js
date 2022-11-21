@@ -23,8 +23,8 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
 
     switch(filters["date_range"]) {
         case 'week':
-            maxDate = endOfWeek(now);
-            minDate = startOfWeek(now);
+            maxDate = endOfWeek(now,  {weekStartsOn: 1});
+            minDate = startOfWeek(now, {weekStartsOn: 1});
             break;
         case 'month':
             maxDate = endOfMonth(now);
