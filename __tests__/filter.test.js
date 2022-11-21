@@ -118,9 +118,9 @@ describe('filters', () => {
     });
 
     test('can filter by month', async () => {
-        const lastmonth = sub(new Date(), {months: 7});
+        const lastmonth = sub(new Date(), {months: 1});
         const now = new Date();
-        const nextmonth = add(new Date(), {months: 7});
+        const nextmonth = add(new Date(), {months: 1});
         const dates = [lastmonth, now, nextmonth]
         for(let i = 0; i < 3; i++) {
             await api
@@ -141,6 +141,31 @@ describe('filters', () => {
         expect(response.body.sessions).toHaveLength(1);
         expect(new Date(response.body.sessions[0].date)).toEqual(now);
     });
+
+    test('can filter by last month', async () => {
+        const month_2 = sub(new Date(), {months: 2});
+        const lastmonth = sub(new Date(), {months: 1});
+        const now = new Date();
+        const dates = [month_2, lastmonth, now]
+        for(let i = 0; i < 3; i++) {
+            await api
+            .post('/api/workout_session')
+            .send({exercises: exercises, date: dates[i]})
+            .set('Authorization', `bearer ${token}`)
+            .expect(201);
+        }
+
+        const sessions = await WorkoutSession.find({});
+        expect(sessions).toHaveLength(3);
+
+        const response = await api
+            .get('/api/workout_session?date_range=last_month')
+            .set('Authorization', `bearer ${token}`)
+            .expect(200);
+        
+        expect(response.body.sessions).toHaveLength(1);
+        expect(new Date(response.body.sessions[0].date)).toEqual(lastmonth);
+    })
 
     test('can filter by year', async () => {
         const lastyear = sub(new Date(), {years: 7});

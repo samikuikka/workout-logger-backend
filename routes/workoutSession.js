@@ -30,6 +30,11 @@ sessionsRouter.get('/', userExtractor, async (request, response) => {
             maxDate = endOfMonth(now);
             minDate = startOfMonth(now)
             break;
+        case 'last_month':
+            const lastMonth = sub(new Date(), { months: 1});
+            maxDate = endOfMonth(lastMonth);
+            minDate = startOfMonth(lastMonth);
+            break;
         case 'year':
             maxDate = endOfYear(now);
             minDate = startOfYear(now);
